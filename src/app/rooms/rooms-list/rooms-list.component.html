@@ -1,0 +1,47 @@
+<h2>{{ title }}</h2>
+<!-- {{roomList}} -->
+<table class="table">
+  <tr>
+    <th>Index</th>
+    <th>Even/Odd</th>
+    <th>Room Number</th>
+    <th>Room Type</th>
+    <th>Room Price</th>
+    <th>Room Ameities</th>
+    <th>Checkin Time</th>
+    <th>Rating</th>
+    <th>Select room</th>
+  </tr>
+  <!-- Structural Directives can modify your DOM -->
+  <!-- Attribute directives can modify DOM but cannot add or remove elements from the DOM -->
+  <tr
+    [ngClass]="e ? 'even' : 'odd'"
+    *ngFor="
+      let room of rooms | filter : price;
+      let e = even;
+      let o = odd;
+      let i = index
+    "
+  >
+    <td>{{ i }}</td>
+    <td>{{ e ? "Even" : "Odd" }}</td>
+    <td>{{ room.roomNumber }}</td>
+    <td>{{ room.roomType }}</td>
+    <td>{{ room.price | currency : "EUR" }}</td>
+    <td>{{ room.amenities | titlecase }}</td>
+    <td>{{ room.checkinTime | date : "MMM/dd/yyy" }}</td>
+    <td>{{ room.rating | number : "1.1-3" }}</td>
+    <td>
+      <!-- <button class="btn btn-primary"
+        (click)="selectRoom(room)">
+        Select
+        </button> -->
+      <button
+        class="btn btn-primary"
+        [routerLink]="['/booking', room.roomNumber]"
+      >
+        Book Room
+      </button>
+    </td>
+  </tr>
+</table>
